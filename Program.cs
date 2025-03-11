@@ -1,4 +1,7 @@
 
+using DI.API.Repository;
+using DI.API.Service;
+
 namespace DI.API
 {
     public class Program
@@ -8,8 +11,11 @@ namespace DI.API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
-            builder.Services.AddControllers();
+            builder.Services.AddTransient<IAccountService, AccountService>();
+            builder.Services.AddTransient<IAccountRepository,AccountRepository>();
+            builder.Services.AddTransient<ICardService, CardService>();
+            builder.Services.AddTransient<ICardRepository,CardRepository>();
+            builder.Services.AddControllers();//AddContoller helps to add all the controller to DI container.
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -28,7 +34,7 @@ namespace DI.API
             app.UseAuthorization();
 
 
-            app.MapControllers();
+            app.MapControllers();//mapping contoller
 
             app.Run();
         }
